@@ -10,6 +10,7 @@ import (
 
 func main() {
 	// Must be root for AF_PACKET
+	// uid must be 0 (root user) else ... no sniffig for you.
 	if os.Geteuid() != 0 {
 		fmt.Println("run with sudo")
 		os.Exit(1)
@@ -18,16 +19,19 @@ func main() {
 	//net interfae
 	iface := "wlp2s0"
 
+	//create a new socket from the above iface(mine is that)
 	fd, err := openRawSocket(iface)
 	if err != nil {
 		fmt.Println("socket error:", err)
 		os.Exit(1)
 	}
+	//later close the socket...house keeping
 	defer closeSocket(fd)
 
 	fmt.Println("🔍 packet sniffer running on", iface)
 	fmt.Println(strings.Repeat("=", 60))
 
+	//create the buffer to write data to when reading.... like you grabbing a notebook when someone is about to yap ... well in this case yeah
 	buf := make([]byte, 65536)
 
 	for {
