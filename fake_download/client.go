@@ -49,7 +49,7 @@ func main() {
 	fmt.Println(string(fileData.Data))
 	fmt.Println("--- END ---")
 
-	// Optionally save it
+	
 	outputName := "downloaded_" + fileData.Name
 	os.WriteFile(outputName, fileData.Data, 0644)
 	fmt.Printf("\nSaved to: %s\n", outputName)
