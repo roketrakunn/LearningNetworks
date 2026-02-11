@@ -16,16 +16,15 @@ func main() {
 		os.Exit(1)
 	}
 
-	//net interfae
 	iface := "wlp2s0"
 
-	//create a new socket from the above iface(mine is that)
+	//create socket
 	fd, err := openRawSocket(iface)
 	if err != nil {
 		fmt.Println("socket error:", err)
 		os.Exit(1)
 	}
-	//later close the socket...house keeping
+	//close the socket after main finishes.
 	defer closeSocket(fd)
 
 	fmt.Println("🔍 packet sniffer running on", iface)
